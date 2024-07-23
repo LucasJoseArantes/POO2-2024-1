@@ -2,6 +2,9 @@ package service;
 
 import java.time.Duration;
 
+import model.Passeio;
+import model.Veiculo;
+
 public class CalculoHoras implements CalculoValor{
 
     public Double calcularValor(Duration duracao,Veiculo veiculo) {
