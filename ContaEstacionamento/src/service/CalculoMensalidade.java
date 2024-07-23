@@ -1,7 +1,11 @@
+package service;
+
 import java.time.Duration;
 
-public class CalculoHoras {
+import model.Passeio;
 
+public class CalculoMensalidade implements CalculoValor{
+    
     public Double calcularValor(Duration duracao,Veiculo veiculo) {
         if (veiculo instanceof Passeio) {
             long horas = duracao.toHours();
@@ -9,5 +13,4 @@ public class CalculoHoras {
         } 
         return 0.0;
     }
-
 }

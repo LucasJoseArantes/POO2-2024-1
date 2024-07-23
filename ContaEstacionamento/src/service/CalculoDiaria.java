@@ -1,6 +1,8 @@
+package service;
+
 import java.time.Duration;
 
-public class CalculoDiaria {
+public class CalculoDiaria implements CalculoValor {
 
     public Double calcularValor(Duration duracao,Veiculo veiculo) {
         long horas = duracao.toHours();
