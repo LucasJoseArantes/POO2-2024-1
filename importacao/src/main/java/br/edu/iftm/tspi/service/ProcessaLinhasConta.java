@@ -33,16 +33,18 @@ public class ProcessaLinhasConta {
         contaDao.salvarLote(lote);
     }
 
-    private void processaCabecalho(String linha) throws Exception {
-        Integer lote = Integer.parseInt(linha.substring( 1, 4));
+    private void processaCabecalho(String linha) throws LoteInvalidoException {
+        Integer lote = Integer.parseInt(linha.substring(1, 4));
         Integer loteBanco = contaDao.getUltimoLote();
         Integer loteEsperado = loteBanco + 1;
+    
         if (!lote.equals(loteEsperado)) {
-            throw new Exception("Lote recebido: "+lote+ 
-                                "diferente do lote esperado:"+loteEsperado);
+            throw new LoteInvalidoException("Lote recebido: " + lote + 
+                                            " diferente do lote esperado: " + loteEsperado);
         }
         this.lote = lote;
     }
+    
 
     private void processaDetalhe(String linha) throws Exception {
         Conta conta = getConta(linha);
