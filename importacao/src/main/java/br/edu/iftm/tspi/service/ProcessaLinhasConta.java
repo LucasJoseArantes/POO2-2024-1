@@ -1,6 +1,5 @@
 package br.edu.iftm.tspi.service;
 
-import java.text.ParseException;
 import java.util.List;
 
 import br.edu.iftm.tspi.dao.ContaDao;
@@ -50,7 +49,7 @@ public class ProcessaLinhasConta {
         contaDao.persistir(conta);
     }
 
-    private Conta getConta(String linha) throws ParseException {
+    private Conta getConta(String linha){
         Conta conta = new Conta();
         conta.setInclusaoAlteracao(linha.substring(1,2));
         
