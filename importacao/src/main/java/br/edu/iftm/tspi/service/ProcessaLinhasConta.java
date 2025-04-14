@@ -1,13 +1,11 @@
 package br.edu.iftm.tspi.service;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import br.edu.iftm.tspi.dao.ContaDao;
 import br.edu.iftm.tspi.domain.Cliente;
 import br.edu.iftm.tspi.domain.Conta;
+import br.edu.iftm.tspi.exepction.LoteInvalidoException;
 
 public class ProcessaLinhasConta {
 
@@ -36,23 +34,26 @@ public class ProcessaLinhasConta {
         contaDao.salvarLote(lote);
     }
 
-    private void processaCabecalho(String linha) throws Exception {
-        Integer lote = Integer.parseInt(linha.substring( 1, 4));
-        Integer loteBanco = contaDao.getUltimoLote();
-        Integer loteEsperado = loteBanco + 1;
-        if (!lote.equals(loteEsperado)) {
-            throw new Exception("Lote recebido: "+lote+ 
-                                "diferente do lote esperado:"+loteEsperado);
-        }
-        this.lote = lote;
+   private void processaCabecalho(String linha) throws LoteInvalidoException {
+    Integer loteProcessado = Integer.parseInt(linha.substring(1, 4));
+    Integer loteBanco = contaDao.getUltimoLote();
+    Integer loteEsperado = loteBanco + 1;
+
+    if (!loteProcessado.equals(loteEsperado)) {
+        throw new LoteInvalidoException("Lote recebido: " + loteProcessado + 
+                                        " diferente do lote esperado: " + loteEsperado);
     }
+    this.lote = loteProcessado;
+}
+
+    
 
     private void processaDetalhe(String linha) throws Exception {
         Conta conta = getConta(linha);
         contaDao.persistir(conta);
     }
 
-    private Conta getConta(String linha) throws ParseException {
+    private Conta getConta(String linha){
         Conta conta = new Conta();
         conta.setInclusaoAlteracao(linha.substring(1,2));
         

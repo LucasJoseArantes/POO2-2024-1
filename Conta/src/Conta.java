@@ -5,7 +5,7 @@ public abstract class Conta {
 
     public abstract void saque(double valor) throws ContaException;
         
-    public Conta(Agencia agencia, String numeroConta, double saldo) {
+    protected Conta(Agencia agencia, String numeroConta, double saldo) {
         this.agencia = agencia;
         this.numeroConta = numeroConta;
         this.saldo = saldo;
